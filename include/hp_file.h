@@ -3,6 +3,9 @@
 #include <record.h>
 
 typedef struct{
+    int block_id;
+    int num_of_records;
+    BF_Block* next;
 
 }HP_block_info;
 
@@ -10,7 +13,8 @@ typedef struct{
 typedef struct {
     int FileDesc;
     int capacity;
-    int id;
+    int last_block_id;
+    int bytes_size; 
 
 } HP_info;
 
