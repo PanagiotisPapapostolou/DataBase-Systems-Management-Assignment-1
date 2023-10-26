@@ -23,6 +23,8 @@ int main() {
   HP_CreateFile(FILE_NAME);
   HP_info* info = HP_OpenFile(FILE_NAME);
 
+
+
   Record record;
   srand(12569874);
   int r;
