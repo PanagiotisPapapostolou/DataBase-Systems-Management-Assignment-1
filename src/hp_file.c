@@ -66,16 +66,27 @@ int HP_InsertEntry(HP_info* hp_info, Record record){
   if (hp_info->last_block_id == 0) {
     BF_Block* block;
     BF_Block_Init(&block);
-    void* data;
+
+    void* records_data;
+    void* block_info_data;
+
     CALL_BF(BF_AllocateBlock(hp_info->FileDesc, block));
-    data = BF_Block_GetData(block);
+    records_data = BF_Block_GetData(block);
+    block_info_data = records_data + hp_info->capacity;
 
-    HP_block_info* block_info = data;
-    block_info[0].block_id = 1;
-    block_info[0].next = NULL;
-    block_info[0].num_of_records = 0;
+    HP_block_info* block_info = block_info_data;
+    block_info->block_id = 1;
+    block_info->next = NULL;
+    block_info->num_of_records = 0;
+    HP_info
 
+    Record* new_record = records_data;
+    memcpy(new_record->name, record.name, strlen(record.name) + 1);
+    memcpy(new_record->surname, record.surname, strlen(record.surname) + 1);
+    memcpy(new_record->city, record.city, strlen(record.city) + 1);
+    new_record->id = record.id;
 
+    printf("%s\n", new_record->name);
 
     CALL_BF(BF_UnpinBlock(block)); 
   }
