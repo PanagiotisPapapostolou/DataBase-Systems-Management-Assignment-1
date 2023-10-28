@@ -38,6 +38,7 @@ int HP_CreateFile(char *fileName){
 
   hpinfo->last_block_id=block_num-1;
   hpinfo->FileDesc=fileDescriptor;
+
   CALL_BF(BF_UnpinBlock(block));
   CALL_BF(BF_CloseFile(fileDescriptor));
   return 0;
@@ -64,11 +65,19 @@ int HP_CloseFile( HP_info* hp_info ){
 int HP_InsertEntry(HP_info* hp_info, Record record){
   if (hp_info->last_block_id == 0) {
     BF_Block* block;
+    BF_Block_Init(&block);
     void* data;
     CALL_BF(BF_AllocateBlock(hp_info->FileDesc, block));
     data = BF_Block_GetData(block);
 
-    
+    HP_block_info* block_info = data;
+    block_info[0].block_id = 1;
+    block_info[0].next = NULL;
+    block_info[0].num_of_records = 0;
+
+
+
+    CALL_BF(BF_UnpinBlock(block)); 
   }
 
   // for (int id = 1; id < hp_info->last_block_id; id++) {
